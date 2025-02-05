@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Applications</title>
+    <title>View Application</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,14 +35,17 @@
 </head>
 <body>
     <div class="container">
-        <h2>View applications</h2>
-        <p><strong>App ID:</strong> 1001</p>
-        <p><strong>User ID:</strong> U123</p>
-        <p><strong>Application Type:</strong> Financial Aid</p>
-        <p><strong>Submission Date:</strong> 2025-01-01</p>
-        <p><strong>Description:</strong> Needs urgent help</p>
-        <p><strong>Status:</strong> Pending</p>
-        <p><strong>Forwarded to Finance:</strong> No</p>
+        <h2>View Application Details</h2>
+        {% comment %} <h1>{{ application.name }}</h1>
+        <p>{{ application.description }}</p> {% endcomment %}
+
+        <p><strong>App ID:</strong> {{ application.app_id }}</p>
+        <p><strong>User ID:</strong> {{ application.user_id }}</p>
+        <p><strong>Application Type:</strong> {{ application.app_type }}</p>
+        <p><strong>Submission Date:</strong> {{ application.app_date }}</p>
+        <p><strong>Description:</strong> {{ application.description }}</p>
+        <p><strong>Status:</strong> {{ application.app_status }}</p>
+        <p><strong>Forwarded to Finance:</strong> {{ application.forwarded_to_finance }}</p>
         <p><strong>Attachments:</strong></p>
         <div class="attachments">
             <button>Download Attachment 1</button>
