@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'user_management.apps.UserManagementConfig',
     'view_application.apps.ViewApplicationConfig',
     'aid_management.apps.AidManagementConfig',
     'closed_applications.apps.ClosedApplicationsConfig',

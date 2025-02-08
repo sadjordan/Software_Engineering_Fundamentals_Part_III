@@ -23,5 +23,6 @@ urlpatterns = [
     path('closed-applications/', include("closed_applications.urls")),
     path('aid-management/', include("aid_management.urls")),
     path('view_application/', include('view_application.urls')),
+    path('user_management/', include("user_management.urls")),
     path('admin/', admin.site.urls)
 ]

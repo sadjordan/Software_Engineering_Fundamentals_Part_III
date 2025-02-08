@@ -1,6 +1,6 @@
-from django.shortcuts import render
 from .models import Application
+from django.shortcuts import render, get_object_or_404, redirect
 
 def home_view(request):
-    applications = Application.objects.all()  # Fetch applications from DB
-    return render(request, "home/home_page.html", {"applications": applications})
+    pending_applications = Application.objects.filter(app_status="Pending")
+    return render(request, "home/home_page.html", {"applications": pending_applications})

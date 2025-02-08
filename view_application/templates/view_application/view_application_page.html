@@ -43,7 +43,7 @@
         <p><strong>User ID:</strong> {{ application.user_id }}</p>
         <p><strong>Application Type:</strong> {{ application.app_type }}</p>
         <p><strong>Submission Date:</strong> {{ application.app_date }}</p>
-        <p><strong>Description:</strong> {{ application.description }}</p>
+        <p><strong>Description:</strong> {{ application.app_description }}</p>
         <p><strong>Status:</strong> {{ application.app_status }}</p>
         <p><strong>Forwarded to Finance:</strong> {{ application.forwarded_to_finance }}</p>
         <p><strong>Attachments:</strong></p>
@@ -55,10 +55,25 @@
             <button>Download Attachment 5</button>
         </div>
         <div class="actions">
-            <button>Approve</button>
-            <button>Deny</button>
-            <button>Forward to Finance</button>
-            <button>Close</button>
+            <form action="{% url 'approve_application' application.app_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Approve</button>
+            </form>
+        
+            <form action="{% url 'deny_application' application.app_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Deny</button>
+            </form>
+
+            <form action="{% url 'forward_application' application.app_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Forward to Finance</button>
+            </form>
+
+            <form action="{% url 'close' application.app_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Close</button>
+            </form>
         </div>
     </div>
 </body>
