@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            text-align: center;
+        }
+        .attachments button {
+            margin: 5px;
+        }
+        .actions button {
+            margin: 10px;
+            padding: 8px 15px;
+            border: 1px solid #000;
+            background: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Report</h2>
+        <p><strong>App ID:</strong> {{ application.app_id }}</p>
+        <p><strong>User ID:</strong> {{ application.user_id }}</p>
+        <p><strong>Application Type:</strong> {{ application.app_type }}</p>
+        <p><strong>Submission Date:</strong> {{ application.app_date }}</p>
+        <p><strong>Description:</strong> {{ application.app_description }}</p>
+        <p><strong>Status:</strong> {{ application.app_status }}</p>
+        <p><strong>Forwarded to Finance:</strong> {{ application.forwarded_to_finance }}</p>
+        <p><strong>Processed by:</strong> {{ application.app_decider }}</p>
+        
+        {% if application.app_denyreason %}
+            <p><strong>Denial Reason:</strong> {{ application.app_denyreason }}</p>
+        {% endif %}
+        
+        {% if application.app_appeal %}
+            <hr>
+            <p><strong>Appeal:</strong> {{ application.app_appeal }}</p>
+            <p><strong>Appeal Date:</strong> {{ application.app_appealdate }}</p>
+            {% if application.app_denyreason2 %}
+                <p><strong>Appeal Denial Reason:</strong> {{ application.app_denyreason2 }}</p>
+            {% endif %}
+            {% if application.app_decider2 %}
+                <p><strong>Appeal Processed by:</strong> {{ application.app_decider2 }}</p>
+            {% endif %}
+        {% endif %}
+
+        <p><strong>Attachments:</strong></p>
+        <div class="attachments">
+            <button>Download Attachment 1</button>
+            <button>Download Attachment 2</button>
+            <button>Download Attachment 3</button>
+            <button>Download Attachment 4</button>
+            <button>Download Attachment 5</button>
+        </div>
+        
+        <div class="actions">
+            <form action="{% url 'close' application.app_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Close</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

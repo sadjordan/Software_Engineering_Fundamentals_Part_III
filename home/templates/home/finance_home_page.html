@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Finance</title>
+    <style>
+        body {
+            width: 95%;
+            height: 95%;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: center; /* Centers the heading */
+            align-items: center; /* Aligns items vertically */
+            padding: 10px;
+            position: relative; /* Enables absolute positioning */
+        }
+        
+        .top-section .logout {
+            position: absolute;
+            right: 10px; /* Moves the button to the top right */
+        }    
+
+        .logout {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 150px;
+        }
+
+        .logout:hover {
+            background-color: #a71d2a;
+        }
+
+        /* Main content container */
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+        }
+        
+        .button-container button {
+            white-space: nowrap; /* Prevents button text from wrapping */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-section">
+        <h1>Welcome Finance</h1>
+        <div>
+            <button class="logout" onclick="window.location.href='{% url 'logout' %}'">Log Out</button> 
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="button-container">
+        <!--    <button onclick="window.location.href='{% url 'closed_applications' %}'">View Closed Applications</button>
+            <button onclick="window.location.href='{% url 'aid_management' %}'">Current Recipients of Aid</button>
+            {% comment %} <button onclick="window.location.href='{% url 'user_management' %}'">User Management</button> {% endcomment %}
+        </div> -->
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Application ID</th>
+                    <th>Name</th>
+                    <th>User ID</th>
+                    <th>Documents</th>
+                    <th>Approve</th>
+                    <th>Change status</th>
+                    <th>Reports</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- tbody for documents, approve, change status, reports should be buttons to click -->
+                
+                <!-- <tr onclick="window.location.href='{% url 'view_application' application.app_id %}'" style="cursor: pointer;"> 
+                    <td>{{ application.app_id }}</td>
+                    <td>{{ application.user_id }}</td>
+                    <td>{{ application.app_type }}</td>
+                    <td>{{ application.app_date }}</td>
+                    <td>{{ application.app_status }}</td> -->
+                </tr>
+                <!-- {% empty %} -->
+                <tr>
+                    <td colspan="7">No applications found.</td>
+                </tr>
+                <!-- {% endfor %} -->
+            </tbody>            
+        </table>
+    </div>
+</body>
+</html>

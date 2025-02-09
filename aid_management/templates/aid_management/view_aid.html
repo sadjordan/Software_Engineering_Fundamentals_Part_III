@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Aid Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            text-align: center;
+        }
+        .actions button {
+            margin: 10px;
+            padding: 8px 15px;
+            border: 1px solid #000;
+            background: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>View Aid Details</h2>
+
+        <p><strong>Aid ID:</strong> {{ aid.aid_id }}</p>
+        <p><strong>User ID:</strong> {{ aid.user }}</p>
+        <p><strong>Type of Aid:</strong> {{ aid.aid_type }}</p>
+        <p><strong>Aid Description:</strong> {{ aid.aid_desc }}</p>
+        <p><strong>Aid Start Date:</strong> {{ aid.aid_startdate }}</p>
+        <p><strong>Aid End Date:</strong> {{ aid.aid_enddate|default:"N/A" }}</p>
+        <p><strong>Aid Status:</strong> {{ aid.aid_status }}</p>
+
+        {% if aid.aid_changereason %}
+            <p><strong>Change Reason:</strong> {{ aid.aid_changereason }}</p>
+            <p><strong>Changed by:</strong> {{ aid.aid_changedecider }}</p>
+            <p><strong>Change Date:</strong> {{ aid.aid_changedate }}</p>
+        {% endif %}
+
+        <div class="actions">
+            <form action="{% url 'suspend_aid' aid.aid_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Suspend</button>
+            </form>
+
+            {% comment %} <form action="{% url 'cancel_aid' aid.aid_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Cancel</button>
+            </form>
+
+            <form action="{% url 'conclude_aid' aid.aid_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Mark as Concluded</button>
+            </form> {% endcomment %}
+
+            <button onclick="window.location.href='{% url 'aid_management' %}'">Return to Aid Management</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -22,12 +22,12 @@
             position: relative; /* Enables absolute positioning */
         }
         
-        .top-section .logout {
+        .top-section .return {
             position: absolute;
             right: 10px; /* Moves the button to the top right */
         }    
 
-        .logout {
+        .return {
             background-color: #dc3545;
             color: white;
             border: none;
@@ -38,7 +38,7 @@
             width: 150px;
         }
 
-        .logout:hover {
+        .return:hover {
             background-color: #a71d2a;
         }
 
@@ -97,9 +97,9 @@
 </head>
 <body>
     <div class="top-section">
-        <h1>Welcome Management</h1>
+        <h1>Closed Applications</h1>
         <div>
-            <button class="logout" onclick="window.location.href='{% url 'logout' %}'">Log Out</button>
+            <button class="return" onclick="window.location.href='{% url 'home' %}'">Return</button>
 
         </div>
     </div>
@@ -120,7 +120,7 @@
             </thead>
             <tbody>
                 {% for application in applications %}
-                <tr onclick="window.location.href='{% url 'view_application' application.app_id %}'" style="cursor: pointer;">
+                <tr onclick="window.location.href='{% url 'view_report' application.app_id %}'" style="cursor: pointer;">
                     <td>{{ application.app_id }}</td>
                     <td>{{ application.user_id }}</td>
                     <td>{{ application.app_type }}</td>
