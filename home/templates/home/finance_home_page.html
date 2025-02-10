@@ -106,38 +106,52 @@
 
     <div class="container">
         <div class="button-container">
-        <!--    <button onclick="window.location.href='{% url 'closed_applications' %}'">View Closed Applications</button>
+            {% comment %} <button onclick="window.location.href='{% url 'closed_applications' %}'">View Closed Applications</button>
             <button onclick="window.location.href='{% url 'aid_management' %}'">Current Recipients of Aid</button>
-            {% comment %} <button onclick="window.location.href='{% url 'user_management' %}'">User Management</button> {% endcomment %}
-        </div> -->
+            <button onclick="window.location.href='{% url 'user_management' %}'">User Management</button> {% endcomment %}
+        </div>
 
         <table>
             <thead>
                 <tr>
                     <th>Application ID</th>
-                    <th>Name</th>
                     <th>User ID</th>
-                    <th>Documents</th>
-                    <th>Approve</th>
-                    <th>Change status</th>
-                    <th>Reports</th>
+                    <th>Type of Aid</th>
+                    <th>Date of Submission</th>
+                    <th>Application Status</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- tbody for documents, approve, change status, reports should be buttons to click -->
-                
-                <!-- <tr onclick="window.location.href='{% url 'view_application' application.app_id %}'" style="cursor: pointer;"> 
+
+                {% for application in applications %}
+                <tr 
+                    onclick="redirectToPage('{{ application.app_id }}', '{{ application.app_status }}')"
+                    data-aid-id="{% if application.app_id in aid_mapping %}{{ aid_mapping|dict_key:application.app_id }}{% else %}null{% endif %}"
+                    style="cursor: pointer;">
                     <td>{{ application.app_id }}</td>
                     <td>{{ application.user_id }}</td>
                     <td>{{ application.app_type }}</td>
                     <td>{{ application.app_date }}</td>
-                    <td>{{ application.app_status }}</td> -->
+                    <td>{{ application.app_status }}</td>
                 </tr>
-                <!-- {% empty %} -->
+                {% empty %}
                 <tr>
                     <td colspan="7">No applications found.</td>
                 </tr>
-                <!-- {% endfor %} -->
+                {% endfor %}
+                
+                <script>
+                    function redirectToPage(app_id, status) {
+                        let row = document.querySelector(`tr[onclick*="'${app_id}'"]`);
+                        let aid_id = row ? row.getAttribute("data-aid-id") : null;
+                
+                        if (status === "Approved" && aid_id) {
+                            window.location.href = "/aid_management/view_aid/" + aid_id + "/";
+                        } else {
+                            window.location.href = "/finance/view_application/" + app_id + "/";
+                        }
+                    }
+                </script>
             </tbody>            
         </table>
     </div>
