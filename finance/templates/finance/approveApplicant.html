@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Applicant</title>
+    <style>
+        body {
+            width: 95%;
+            height: 95%;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .middle-section {
+            display: flex; 
+            justify-content: space-around; /* Distributes items evenly */
+            align-items: center; /* Aligns items vertically */
+            gap: 100px; /* Adds spacing between items */
+            width: 95%; 
+            margin-left: 40px;
+        }
+        .budgets {
+            display: flex; 
+            justify-content: space-around; /* Distributes items evenly */
+            align-items: center; /* Aligns items vertically */
+            gap: 110px; /* Adds spacing between items */
+            width: 95%; 
+            margin-left: 40px;
+        }
+        .budgets div {
+        border: 2px solid black; /* Creates a visible box */
+        padding: 10px 20px; /* Adds space inside the box */
+        border-radius: 5px; /* Optional: Rounds the corners */
+        background-color: rgb(224, 223, 223); /* Optional: Adds a background color */
+        text-align: center;
+        }
+        /* Main content container */
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 96%;
+            height: 500px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #projected{
+            border: 2px solid black; /* Creates a visible box */
+            padding: 10px 20px; /* Adds space inside the box */
+            border-radius: 5px; /* Optional: Rounds the corners */
+            background-color: rgb(224, 223, 223); /* Optional: Adds a background color */
+            text-align: center;
+            width: min-content;
+            margin-left: 44%;
+        }
+        .actions button {
+            margin-top: 10%;
+            margin-left: 10px;
+            padding: 8px 15px;
+            border: 1px solid #000;
+            background: white;
+            cursor: pointer;
+        }
+
+    </style>
+    <script>
+        function updateBudget() {
+            let currentSemBudget = 50000; 
+            document.getElementById("current").innerText = `${currentSemBudget.toFixed(2)}`;
+            let totalAidBudget = 10000; 
+            document.getElementById("total").innerText = `${totalAidBudget.toFixed(2)}`;
+            let projectedAidNeeded = 10000; 
+            document.getElementById("projected").innerText = `${projectedAidNeeded .toFixed(2)}`;
+        }
+
+        window.onload = function () {
+        updateBudget(); // Ensures it updates after page loads
+        setInterval(updatePrice, 5000); // Updates every 5 seconds
+    };
+    </script>
+</head>
+<div class="container">
+    <body>
+    <div class="middle-section">
+        <h4>Current semester <p>aid budget (MYR):</p> </h4>
+        <h4>Total aid account <p>balance (MYR):</p> </h4>
+        
+    </div>
+    <div class="budgets">
+        <div id="current">Error</div>
+        <div id="total">Error</div>
+        
+    </div> 
+    
+    <h4>Projected aid <p>needed (MYR)<p> if approved:</p></p> </h4>
+    <div id="projected">Error</div>
+    
+    <div class="actions">
+        <p><button>Approve Applicant</button></p>
+        
+    </div>
+    </body>
+</div>
+
+    
+        
+        
