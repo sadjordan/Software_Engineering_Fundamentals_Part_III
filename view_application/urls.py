@@ -6,5 +6,6 @@ urlpatterns = [
     path('<str:app_id>/approve/', approve_application, name='approve_application'),
     path('<str:app_id>/deny/', deny_application, name='deny_application'),
     path('<str:app_id>/forward/', forward_application, name='forward_application'),
-    path('<str:app_id>/return/', return_to_previous_page, name='close')
+    path('<str:app_id>/return/', return_to_previous_page, name='close'),
+    path('<str:app_id>/create_aid_recipient/', create_aid_recipient, name='create_aid_recipient'),
 ]

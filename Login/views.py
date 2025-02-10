@@ -15,7 +15,7 @@ def login_view(request):
         if user is not None:
             if username[0] == 'M':
                 login(request, user)
-                return redirect('home')
+                return redirect('home:home')
             elif username[0] == 'F':
                 login(request, user)
                 return redirect('home:finance_home')

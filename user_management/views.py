@@ -5,7 +5,10 @@ from django.contrib import messages
 from home.models import Application
 from django.http import JsonResponse
 from .models import UserIDTracker
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def generate_user_id(request, user_type):
     if user_type not in ["M", "F", "S", "U"]:
         return JsonResponse({"error": "Invalid user type"}, status=400)
@@ -18,20 +21,22 @@ def generate_user_id(request, user_type):
 
     return JsonResponse({"user_id": new_user_id})
 
+@login_required
 def user_management_view(request):
     users = User.objects.all()
     return render(request, "user_management/user_management_page.html", {"users" : users})
 
+@login_required
 def create_user_view(request):
     return render(request, 'user_management/create_user_page.html', {'user': None})
 
-
+@login_required
 def edit_user_view(request, user_id):
     user = get_object_or_404(User, userid=user_id)
 
     return render(request, 'user_management/create_user_page.html', {'user': user, 'edit_mode': True})
 
-
+@login_required
 def create_user(request):
     if request.method == 'POST':
         original_userid = request.POST.get('original_userid')

@@ -55,7 +55,7 @@
             <button>Download Attachment 5</button>
         </div>
         <div class="actions">
-            <form action="{% url 'approve_application' application.app_id %}" method="post">
+            <form id="approve-form" action="{% url 'approve_application' application.app_id %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Approve</button>
             </form>
@@ -71,7 +71,7 @@
                 <button type="submit">Forward to Finance</button>
             </form>
 
-            <form action="{% url 'close' application.app_id %}" method="post">
+            <form action="{% url 'home:home' %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Close</button>
             </form>
@@ -84,7 +84,7 @@
                         return false;
                     }
                     document.getElementById("deny-reason").value = reason;
-                    return true; // Allow form submission
+                    return true;
                 }
             </script>
             

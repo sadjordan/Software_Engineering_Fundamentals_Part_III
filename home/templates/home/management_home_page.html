@@ -99,8 +99,10 @@
     <div class="top-section">
         <h1>Welcome Management</h1>
         <div>
-            <button class="logout" onclick="window.location.href='{% url 'logout' %}'">Log Out</button>
-
+            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button class="logout" type="submit">Log Out</button>
+            </form>
         </div>
     </div>
 

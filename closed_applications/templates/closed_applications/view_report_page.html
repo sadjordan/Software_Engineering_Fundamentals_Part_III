@@ -71,7 +71,7 @@
         </div>
         
         <div class="actions">
-            <form action="{% url 'close' application.app_id %}" method="post">
+            <form action="{% url 'closed_applications' %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Close</button>
             </form>
