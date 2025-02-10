@@ -13,12 +13,22 @@ def home_view(request):
 @login_required
 def finance_home(request):
     applications = Application.objects.all()
-    
-    # Create a dictionary mapping app_id to aid_id
-    aid_mapping = {aid.app: aid.aid_id for aid in AidRecipients.objects.all()}
+    aid_mapping = {aid.app_id: aid.aid_id for aid in AidRecipients.objects.all()}
 
-    return render(request, 'finance/home.html', {
-        'applications': applications,
-        'aid_mapping': aid_mapping  # Pass this mapping to the template
-    })
+    applications_with_aids = []
+    for application in applications:
+        aid_id = aid_mapping.get(application.app_id)
+        applications_with_aids.append({
+            'app_id': application.app_id,
+            'user_id': application.user_id,
+            'app_type': application.app_type,
+            'app_date': application.app_date,
+            'app_status': application.app_status,
+            'aid_id': aid_id 
+        })
+
+    context = {
+        'applications': applications_with_aids,
+    }
+    return render(request, 'home/finance_home_page.html', context)
 

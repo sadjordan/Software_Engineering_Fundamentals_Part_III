@@ -95,21 +95,20 @@
         }
     </style>
 </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <body>
     <div class="top-section">
         <h1>Welcome Finance</h1>
         <div>
             <button class="logout" onclick="window.location.href='{% url 'logout' %}'">Log Out</button> 
-
         </div>
     </div>
 
     <div class="container">
         <div class="button-container">
-            {% comment %} <button onclick="window.location.href='{% url 'closed_applications' %}'">View Closed Applications</button>
-            <button onclick="window.location.href='{% url 'aid_management' %}'">Current Recipients of Aid</button>
-            <button onclick="window.location.href='{% url 'user_management' %}'">User Management</button> {% endcomment %}
-        </div>
+            </div>
 
         <table>
             <thead>
@@ -123,11 +122,9 @@
             </thead>
             <tbody>
 
-                {% for application in applications %}
-                <tr 
+                {% for application in applications %}  <tr 
                     onclick="redirectToPage('{{ application.app_id }}', '{{ application.app_status }}')"
-                    data-aid-id="{% if application.app_id in aid_mapping %}{{ aid_mapping|dict_key:application.app_id }}{% else %}null{% endif %}"
-                    style="cursor: pointer;">
+                    data-aid-id="{{ application.aid_id }}"  style="cursor: pointer;">
                     <td>{{ application.app_id }}</td>
                     <td>{{ application.user_id }}</td>
                     <td>{{ application.app_type }}</td>
@@ -146,7 +143,7 @@
                         let aid_id = row ? row.getAttribute("data-aid-id") : null;
                 
                         if (status === "Approved" && aid_id) {
-                            window.location.href = "/aid_management/view_aid/" + aid_id + "/";
+                            window.location.href = "/aid-management/aid/" + aid_id + "/";
                         } else {
                             window.location.href = "/finance/view_application/" + app_id + "/";
                         }
