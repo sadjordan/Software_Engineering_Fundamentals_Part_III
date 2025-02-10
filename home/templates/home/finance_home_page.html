@@ -93,23 +93,75 @@
             background-color: #007BFF;
             color: white;
         }
+        .middle-section {
+            display: flex; 
+            justify-content: space-around; /* Distributes items evenly */
+            align-items: center; /* Aligns items vertically */
+            gap: 100px; /* Adds spacing between items */
+            width: 95%; 
+            margin-left: 40px;
+        }
+        .budgets {
+            display: flex; 
+            justify-content: space-around; /* Distributes items evenly */
+            align-items: center; /* Aligns items vertically */
+            gap: 110px; /* Adds spacing between items */
+            width: 95%; 
+            margin-left: 40px;
+        }
+        .budgets div {
+        border: 2px solid black; /* Creates a visible box */
+        padding: 10px 20px; /* Adds space inside the box */
+        border-radius: 5px; /* Optional: Rounds the corners */
+        background-color: rgb(224, 223, 223); /* Optional: Adds a background color */
+        text-align: center;
+        }
     </style>
+
 </head>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <body>
+
+    <script>
+        function updateBudget() {
+            let currentSemBudget = 50000; 
+            document.getElementById("current").innerText = `${currentSemBudget.toFixed(2)}`;
+            let totalAidBudget = 10000; 
+            document.getElementById("total").innerText = `${totalAidBudget.toFixed(2)}`;
+            let projectedAidNeeded = 10000; 
+            document.getElementById("projected").innerText = `${projectedAidNeeded .toFixed(2)}`;
+        }
+
+        window.onload = function () {
+        updateBudget(); // Ensures it updates after page loads
+        setInterval(updatePrice, 5000); // Updates every 5 seconds
+    };
+    </script>
+
     <div class="top-section">
         <h1>Welcome Finance</h1>
         <div>
             <button class="logout" onclick="window.location.href='{% url 'logout' %}'">Log Out</button> 
-
         </div>
+    </div>
+
+    <div class="middle-section">
+        <h4>Current semester <p>aid budget (MYR):</p> </h4>
+        <h4>Total aid account <p>balance (MYR):</p> </h4>
+        <h4>Projected aid <p>needed (MYR):</p> </h4>
+    </div>
+    <div class="budgets">
+        <div id="current">Error</div>
+        <div id="total">Error</div>
+        <div id="projected">Error</div>
     </div>
 
     <div class="container">
         <div class="button-container">
-            {% comment %} <button onclick="window.location.href='{% url 'closed_applications' %}'">View Closed Applications</button>
-            <button onclick="window.location.href='{% url 'aid_management' %}'">Current Recipients of Aid</button>
-            <button onclick="window.location.href='{% url 'user_management' %}'">User Management</button> {% endcomment %}
-        </div>
+            </div>
 
         <table>
             <thead>
@@ -123,11 +175,9 @@
             </thead>
             <tbody>
 
-                {% for application in applications %}
-                <tr 
+                {% for application in applications %}  <tr 
                     onclick="redirectToPage('{{ application.app_id }}', '{{ application.app_status }}')"
-                    data-aid-id="{% if application.app_id in aid_mapping %}{{ aid_mapping|dict_key:application.app_id }}{% else %}null{% endif %}"
-                    style="cursor: pointer;">
+                    data-aid-id="{{ application.aid_id }}"  style="cursor: pointer;">
                     <td>{{ application.app_id }}</td>
                     <td>{{ application.user_id }}</td>
                     <td>{{ application.app_type }}</td>
@@ -146,7 +196,7 @@
                         let aid_id = row ? row.getAttribute("data-aid-id") : null;
                 
                         if (status === "Approved" && aid_id) {
-                            window.location.href = "/aid_management/view_aid/" + aid_id + "/";
+                            window.location.href = "/aid-management/aid/" + aid_id + "/";
                         } else {
                             window.location.href = "/finance/view_application/" + app_id + "/";
                         }
