@@ -28,7 +28,8 @@ def create_user_view(request):
 
 def edit_user_view(request, user_id):
     user = get_object_or_404(User, userid=user_id)
-    return render(request, 'user_management/create_user_page.html', {'user': user})
+
+    return render(request, 'user_management/create_user_page.html', {'user': user, 'edit_mode': True})
 
 
 def create_user(request):

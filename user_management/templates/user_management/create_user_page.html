@@ -145,40 +145,40 @@
 
     <div class="container">
         
-        <form method="post" action="{% url 'create_user' %}">
+        <form method="post" action="{% if edit_mode %}{% url 'edit_user_page' user.userid %}{% else %}{% url 'create_user' %}{% endif %}">
             {% csrf_token %}
         
             <label for="userid">User ID:</label>
-            <input type="text" id="userid" name="userid" required readonly>
+            <input type="text" id="userid" name="userid" required readonly value="{% if edit_mode %}{{ user.userid }}{% endif %}">
         
             <div class="user-type-selection">
-                <label>Management <input type="radio" name="user_type" value="M"></label>
-                <label>Finance <input type="radio" name="user_type" value="F"></label>
-                <label>Staff <input type="radio" name="user_type" value="S"></label>
-                <label>Student <input type="radio" name="user_type" value="U"></label>
+                <label>Management <input type="radio" name="user_type" value="M" {% if edit_mode and user.user_type == "M" %}checked{% endif %}></label>
+                <label>Finance <input type="radio" name="user_type" value="F" {% if edit_mode and user.user_type == "F" %}checked{% endif %}></label>
+                <label>Staff <input type="radio" name="user_type" value="S" {% if edit_mode and user.user_type == "S" %}checked{% endif %}></label>
+                <label>Student <input type="radio" name="user_type" value="U" {% if edit_mode and user.user_type == "U" %}checked{% endif %}></label>
             </div>
-        
+
             <div class="generate-btn">
                 <button type="button" onclick="generateUserID()">Generate User ID</button>
             </div>
         
             <div class="form-group">
                 <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="first_name" required>
+                <input type="text" id="first_name" name="first_name" required value="{% if edit_mode %}{{ user.first_name }}{% endif %}">
             </div>
         
             <div class="form-group">
                 <label for="last_name">Last Name:</label>
-                <input type="text" id="last_name" name="last_name" required>
+                <input type="text" id="last_name" name="last_name" required value="{% if edit_mode %}{{ user.last_name }}{% endif %}">
             </div>
         
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" {% if not edit_mode %}required{% endif %}>
             </div>
         
-            <button type="submit">Create User</button>
-        </form>
+            <button type="submit">{% if edit_mode %}Update User{% else %}Create User{% endif %}</button>
+        </form>        
         
         <script>
             function generateUserID() {

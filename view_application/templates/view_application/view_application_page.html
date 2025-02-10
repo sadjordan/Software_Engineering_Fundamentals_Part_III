@@ -60,8 +60,9 @@
                 <button type="submit">Approve</button>
             </form>
         
-            <form action="{% url 'deny_application' application.app_id %}" method="post">
+            <form id="deny-form" action="{% url 'deny_application' application.app_id %}" method="post" onsubmit="return confirmDeny()">
                 {% csrf_token %}
+                <input type="hidden" id="deny-reason" name="change_reason">
                 <button type="submit">Deny</button>
             </form>
 
@@ -74,6 +75,19 @@
                 {% csrf_token %}
                 <button type="submit">Close</button>
             </form>
+            
+            <script>
+                function confirmDeny() {
+                    let reason = prompt("Please enter a reason for denying the application:");
+                    if (reason === null || reason.trim() === "") {
+                        alert("A reason is required to deny the application.");
+                        return false;
+                    }
+                    document.getElementById("deny-reason").value = reason;
+                    return true; // Allow form submission
+                }
+            </script>
+            
         </div>
     </div>
 </body>

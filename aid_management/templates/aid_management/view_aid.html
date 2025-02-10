@@ -49,20 +49,35 @@
         {% endif %}
 
         <div class="actions">
-            <form action="{% url 'suspend_aid' aid.aid_id %}" method="post">
+            <form id="suspendForm" action="{% url 'suspend_aid' aid.aid_id %}" method="post" onsubmit="return confirmAction(this, 'Suspend')">
                 {% csrf_token %}
+                <input type="hidden" name="aid_changereason" id="suspendReason">
                 <button type="submit">Suspend</button>
             </form>
-
-            {% comment %} <form action="{% url 'cancel_aid' aid.aid_id %}" method="post">
+            
+            <form id="cancelForm" action="{% url 'cancel_aid' aid.aid_id %}" method="post" onsubmit="return confirmAction(this, 'Cancel')">
                 {% csrf_token %}
+                <input type="hidden" name="aid_changereason" id="cancelReason">
                 <button type="submit">Cancel</button>
             </form>
-
-            <form action="{% url 'conclude_aid' aid.aid_id %}" method="post">
+            
+            <form id="concludeForm" action="{% url 'conclude_aid' aid.aid_id %}" method="post" onsubmit="return confirmAction(this, 'Conclude')">
                 {% csrf_token %}
+                <input type="hidden" name="aid_changereason" id="concludeReason">
                 <button type="submit">Mark as Concluded</button>
-            </form> {% endcomment %}
+            </form>
+            
+            <script>
+                function confirmAction(form, action) {
+                    let reason = prompt("Please provide a reason:");
+                    if (reason === null || reason.trim() === "") {
+                        alert("You must provide a reason.");
+                        return false;
+                    }
+                    form.querySelector("input[name='aid_changereason']").value = reason;
+                    return true;
+                }
+            </script>            
 
             <button onclick="window.location.href='{% url 'aid_management' %}'">Return to Aid Management</button>
         </div>

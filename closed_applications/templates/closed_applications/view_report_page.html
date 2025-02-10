@@ -42,12 +42,12 @@
         <p><strong>Submission Date:</strong> {{ application.app_date }}</p>
         <p><strong>Description:</strong> {{ application.app_description }}</p>
         <p><strong>Status:</strong> {{ application.app_status }}</p>
-        <p><strong>Forwarded to Finance:</strong> {{ application.forwarded_to_finance }}</p>
-        <p><strong>Processed by:</strong> {{ application.app_decider }}</p>
-        
         {% if application.app_denyreason %}
             <p><strong>Denial Reason:</strong> {{ application.app_denyreason }}</p>
         {% endif %}
+        <p><strong>Forwarded to Finance:</strong> {{ application.forwarded_to_finance }}</p>
+        <p><strong>Processed by:</strong> {{ application.app_decider }}</p>
+        
         
         {% if application.app_appeal %}
             <hr>
