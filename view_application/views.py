@@ -3,6 +3,7 @@ from home.models import Application
 from aid_management.models import AidRecipients
 from .forms import AidRecipientForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 @login_required
 def view_application_view(request, app_id):
@@ -17,7 +18,7 @@ def approve_application(request, app_id):
         application.app_status = 'Approved'
         application.app_decider = request.user.userid
         application.save()
-        print("fuck")
+        messages.success(request, "Application approved successfully.")
         return redirect('create_aid_recipient', app_id=app_id)  # Redirecting to create aid recipient
 
     return redirect('home')
@@ -37,6 +38,7 @@ def deny_application(request, app_id):
         application.app_denyreason = change_reason
         application.app_decider = request.user.userid
         application.save()
+        messages.success(request, "Application denied successfully.")
         return redirect("view_application", app_id=app_id)
 
     return redirect("view_application", app_id=app_id)
@@ -46,6 +48,7 @@ def forward_application(request, app_id):
     application = get_object_or_404(Application, app_id=app_id)
     application.forwarded_to_finance = True
     application.save()
+    messages.success(request, "Application forwarded successfully.")
     return redirect('view_application', app_id=app_id)
 
 @login_required
@@ -66,7 +69,7 @@ def create_aid_recipient(request, app_id):
         if form.is_valid():
             aid_recipient = form.save(commit=False)
             aid_recipient.app = application
-            aid_recipient.user = request.user
+            aid_recipient.user_id = application.user_id
             aid_recipient.aid_id = new_aid_id
             aid_recipient.save()
             return redirect('home:home')

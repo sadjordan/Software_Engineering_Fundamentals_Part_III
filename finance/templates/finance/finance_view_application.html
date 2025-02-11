@@ -55,18 +55,18 @@
             <button>Download Attachment 5</button>
         </div>
         <div class="actions">
-            <form action="{% url 'approve_application' application.app_id %}" method="post">
+            <form action="{% url 'finance_approve_application' application.app_id %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Approve</button>
             </form>
         
-            <form id="deny-form" action="{% url 'deny_application' application.app_id %}" method="post" onsubmit="return confirmDeny()">
+            <form id="deny-form" action="{% url 'finance_deny_application' application.app_id %}" method="post" onsubmit="return confirmDeny()">
                 {% csrf_token %}
                 <input type="hidden" id="deny-reason" name="change_reason">
                 <button type="submit">Deny</button>
             </form>
 
-            <form action="{% url 'close' application.app_id %}" method="post">
+            <form action="{% url 'finance_close' application.app_id %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Close</button>
             </form>
