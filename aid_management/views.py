@@ -5,7 +5,7 @@ from .models import AidRecipients
 
 @login_required
 def aid_management_view(request):
-    aid_recipients = AidRecipients.objects.all()  # Fetch applications from DB
+    aid_recipients = AidRecipients.objects.all()
     return render(request, "aid_management/aid_management_page.html", {"aid_recipients": aid_recipients})
 
 
@@ -63,4 +63,15 @@ def update_aid_description(request, aid_id):
         aid.aid_desc = request.POST.get('aid_description', aid.aid_desc)
         aid.save()
         return redirect('view_aid', aid_id=aid_id)
+    return redirect('view_aid', aid_id=aid_id)
+
+@login_required
+def continue_aid(request, aid_id):
+    aid = get_object_or_404(AidRecipients, aid_id=aid_id)
+    if request.method == 'POST':
+        aid.aid_status = 'Ongoing'
+        aid.aid_changereason = request.POST.get('aid_changereason')
+        aid.aid_changedate = timezone.now().date()
+        aid.aid_changedecider = request.user.userid
+        aid.save()
     return redirect('view_aid', aid_id=aid_id)

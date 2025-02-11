@@ -6,9 +6,8 @@ class MyUserManager(BaseUserManager):
         if not userid:
             raise ValueError('The User ID must be set')
         
-        # Create user and set password
         user = self.model(userid=userid, first_name=first_name, last_name=last_name)
-        user.set_password(password)  # Hashes the password
+        user.set_password(password)  # hashes the password
         user.save(using=self._db)
         return user
 
@@ -25,7 +24,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30, null=False)
     last_name = models.CharField(max_length=30, null=False)
     
-    # These fields are required by the PermissionsMixin
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

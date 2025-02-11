@@ -58,13 +58,14 @@
         <p><strong>Aid Start Date:</strong> {{ aid.aid_startdate }}</p>
         <p><strong>Aid End Date:</strong> {{ aid.aid_enddate|default:"N/A" }}</p>
         <p><strong>Aid Status:</strong> {{ aid.aid_status }}</p>
-        <p><strong>Aid Description:</strong></p>
 
         {% if aid.aid_changereason %}
             <p><strong>Change Reason:</strong> {{ aid.aid_changereason }}</p>
             <p><strong>Changed by:</strong> {{ aid.aid_changedecider }}</p>
             <p><strong>Change Date:</strong> {{ aid.aid_changedate }}</p>
         {% endif %}
+
+        <p><strong>Aid Description:</strong></p>
 
         <div class="input-container">
             <form id="updateDescForm" action="{% url 'update_aid_description' aid.aid_id %}" method="post">
@@ -92,6 +93,12 @@
                 {% csrf_token %}
                 <input type="hidden" name="aid_changereason">
                 <button type="submit">Mark as Concluded</button>
+            </form>
+
+            <form id="concludeForm" action="{% url 'continue_aid' aid.aid_id %}" method="post" onsubmit="return confirmAction(this, 'Continue aid')">
+                {% csrf_token %}
+                <input type="hidden" name="aid_changereason">
+                <button type="submit">Continue Aid</button>
             </form>
 
             <button onclick="redirectUser()">Return</button>

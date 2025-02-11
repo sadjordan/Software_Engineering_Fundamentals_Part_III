@@ -19,7 +19,7 @@ def approve_application(request, app_id):
         application.app_decider = request.user.userid
         application.save()
         messages.success(request, "Application approved successfully.")
-        return redirect('create_aid_recipient', app_id=app_id)  # Redirecting to create aid recipient
+        return redirect('create_aid_recipient', app_id=app_id)
 
     return redirect('home')
 
