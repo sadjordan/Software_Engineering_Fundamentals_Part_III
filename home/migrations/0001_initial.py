@@ -35,6 +35,7 @@ class Migration(migrations.Migration):
                 ('app_decider', models.CharField(blank=True, max_length=10, null=True)),
                 ('app_decider2', models.CharField(blank=True, max_length=10, null=True)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('Financial_aid_status',models.CharField(choices=[('Waiting for Approval', 'Waiting for Approval'), ('Approved', 'Approved'), ('Denied', 'Denied'), ('Verified', 'Verified')], default='Waiting for Approval', max_length=20)),
             ],
         ),
     ]
