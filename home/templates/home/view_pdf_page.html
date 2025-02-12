@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View PDF</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        iframe { width: 80%; height: 500px; border: none; margin: 20px 0; }
+        .buttons { margin-top: 20px; }
+        button { margin: 10px; padding: 10px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Document Viewer for {{ app_id }}</h2>
+
+    <iframe id="pdfFrame" src="{% url 'home:view_pdf' app_id %}" frameborder="0"></iframe>
+
+    <script>
+        document.getElementById("pdfFrame").onload = function() {
+            console.log("Iframe loaded successfully");
+        };
+    </script>
+
+    <div class="buttons">
+        <button onclick="window.history.back()">Go Back</button>
+        <button onclick="window.print()">Print</button>
+        <button onclick="window.open('{% url 'home:view_pdf' app_id %}', '_blank')">Download PDF</button>
+    </div>
+
+</body>
+</html>
+
+
