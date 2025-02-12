@@ -18,12 +18,30 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            width: 50%;
+            width: 75%;
             text-align: center;
         }
+        .container > h2 {
+            text-align: center;
+        }
+        .input-container {
+            margin-bottom: 15px;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
         .actions button {
-            margin: 10px;
-            padding: 8px 15px;
+            padding: 10px 15px;
             border: 1px solid #000;
             background: white;
             cursor: pointer;
@@ -37,10 +55,10 @@
         <p><strong>Aid ID:</strong> {{ aid.aid_id }}</p>
         <p><strong>User ID:</strong> {{ aid.user }}</p>
         <p><strong>Type of Aid:</strong> {{ aid.aid_type }}</p>
-        <p><strong>Aid Description:</strong> {{ aid.aid_desc }}</p>
         <p><strong>Aid Start Date:</strong> {{ aid.aid_startdate }}</p>
         <p><strong>Aid End Date:</strong> {{ aid.aid_enddate|default:"N/A" }}</p>
         <p><strong>Aid Status:</strong> {{ aid.aid_status }}</p>
+        <p><strong>Aid Description:</strong></p>
 
         {% if aid.aid_changereason %}
             <p><strong>Change Reason:</strong> {{ aid.aid_changereason }}</p>
@@ -48,39 +66,59 @@
             <p><strong>Change Date:</strong> {{ aid.aid_changedate }}</p>
         {% endif %}
 
+        <div class="input-container">
+            <form id="updateDescForm" action="{% url 'update_aid_description' aid.aid_id %}" method="post">
+                {% csrf_token %}
+                <textarea name="aid_description" placeholder="Update aid description...">{{ aid.aid_desc }}</textarea>
+                <br>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
         <div class="actions">
             <form id="suspendForm" action="{% url 'suspend_aid' aid.aid_id %}" method="post" onsubmit="return confirmAction(this, 'Suspend')">
                 {% csrf_token %}
-                <input type="hidden" name="aid_changereason" id="suspendReason">
-                <button type="submit">Suspend</button>
+                <input type="hidden" name="aid_changereason">
+                <button type="submit">Suspend Aid</button>
             </form>
-            
+
             <form id="cancelForm" action="{% url 'cancel_aid' aid.aid_id %}" method="post" onsubmit="return confirmAction(this, 'Cancel')">
                 {% csrf_token %}
-                <input type="hidden" name="aid_changereason" id="cancelReason">
-                <button type="submit">Cancel</button>
+                <input type="hidden" name="aid_changereason">
+                <button type="submit">Cancel Aid</button>
             </form>
-            
+
             <form id="concludeForm" action="{% url 'conclude_aid' aid.aid_id %}" method="post" onsubmit="return confirmAction(this, 'Conclude')">
                 {% csrf_token %}
-                <input type="hidden" name="aid_changereason" id="concludeReason">
+                <input type="hidden" name="aid_changereason">
                 <button type="submit">Mark as Concluded</button>
             </form>
-            
+
+            <button onclick="redirectUser()">Return</button>
+
             <script>
-                function confirmAction(form, action) {
-                    let reason = prompt("Please provide a reason:");
-                    if (reason === null || reason.trim() === "") {
-                        alert("You must provide a reason.");
-                        return false;
+                function redirectUser() {
+                    const isFinanceUser = {{ is_finance_user|lower }}; // Make sure this context variable is passed in Django
+                    if (isFinanceUser) {
+                        window.location.href = "{% url 'home:finance_home' %}";
+                    } else {
+                        window.location.href = "{% url 'aid_management' %}";
                     }
-                    form.querySelector("input[name='aid_changereason']").value = reason;
-                    return true;
                 }
             </script>            
-
-            <button onclick="window.location.href='{% url 'aid_management' %}'">Return to Aid Management</button>
         </div>
     </div>
+
+    <script>
+        function confirmAction(form, action) {
+            let reason = prompt("Enter reason for " + action + ":");
+            if (reason === null || reason.trim() === "") {
+                alert("You must provide a reason.");
+                return false;
+            }
+            form.querySelector("input[name='aid_changereason']").value = reason;
+            return true;
+        }
+    </script>
 </body>
 </html>
