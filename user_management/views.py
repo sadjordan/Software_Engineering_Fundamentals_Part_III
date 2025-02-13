@@ -44,7 +44,7 @@ def create_user(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         password = request.POST.get('password')
-
+        
         if original_userid:
             try:
                 user = User.objects.get(userid=original_userid)

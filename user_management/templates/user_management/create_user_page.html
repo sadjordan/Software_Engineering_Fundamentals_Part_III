@@ -145,9 +145,9 @@
 
     <div class="container">
         
-        <form method="post" action="{% if edit_mode %}{% url 'edit_user_page' user.userid %}{% else %}{% url 'create_user' %}{% endif %}">
+        <form method="post" action="{% url 'create_user' %}">
             {% csrf_token %}
-        
+            <input type="hidden" name="original_userid" value="{{ user.userid }}">
             <label for="userid">User ID:</label>
             <input type="text" id="userid" name="userid" required readonly value="{% if edit_mode %}{{ user.userid }}{% endif %}">
         
@@ -159,7 +159,10 @@
             </div>
 
             <div class="generate-btn">
-                <button type="button" onclick="generateUserID()">Generate User ID</button>
+                <button type="button" id="generate-btn" onclick="generateUserID()" 
+                    {% if edit_mode %}disabled{% endif %}>
+                    Generate User ID
+                </button>
             </div>
         
             <div class="form-group">
@@ -193,7 +196,7 @@
                 fetch(`/user_management/generate_user_id/${prefix}/`)
                     .then(response => response.json())
                     .then(data => {
-                        if (data.user_id) {  // Corrected key name
+                        if (data.user_id) {
                             document.getElementById("userid").value = data.user_id;
                         } else {
                             alert("Error generating User ID.");
